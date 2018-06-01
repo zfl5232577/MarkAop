@@ -12,9 +12,8 @@ AOP切面框架：
       }
     }
     
-app的build.gradle文件
+Module的build.gradle文件
 
-    apply plugin: 'com.android.application'
     apply plugin: 'markaop-plugin'
   
   
