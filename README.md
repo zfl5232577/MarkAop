@@ -3,18 +3,18 @@
   
 AOP切面框架：
 
-  
-   buildscript {
+    buildscript {
        repositories {
           maven { url "https://raw.githubusercontent.com/zfl5232577/maven/master" }
       }
       dependencies {
           classpath 'com.mark:markaop-plugin:1.0.0'
       }
-   }
-   
-  app的build.gradle文件
-  apply plugin: 'com.android.application'
-  apply plugin: 'markaop-plugin'
+    }
+    
+app的build.gradle文件
+
+    apply plugin: 'com.android.application'
+    apply plugin: 'markaop-plugin'
   
   
