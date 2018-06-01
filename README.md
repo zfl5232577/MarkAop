@@ -41,43 +41,44 @@ Module的build.gradle文件
 BaseActivity添加下面函数和变量：
 
 	
-public class BaseActivity extends AppCompatActivity {
-    private List<Method> mMethodList = new ArrayList<>();
-    private HashMap<String, Object[]> mMethodArgs = new HashMap<>();
+	
+	public class BaseActivity extends AppCompatActivity {
+	    private List<Method> mMethodList = new ArrayList<>();
+	    private HashMap<String, Object[]> mMethodArgs = new HashMap<>();
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_OK) {
-            return;
-        }
-        switch (requestCode) {
-            case LoginActivity.REQUEST_CODE:
-                for (Method method : mMethodList) {
-                    try {
-                        method.setAccessible(true);
-                        if (mMethodArgs.get(method.getName()) != null) {
-                            method.invoke(this, mMethodArgs.get(method.getName()));
-                        }else {
-                            method.invoke(this);
-                        }
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    }
-                }
-                mMethodList.clear();
-                break;
-        }
-    }
+	    @Override
+	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode != RESULT_OK) {
+		    return;
+		}
+		switch (requestCode) {
+		    case LoginActivity.REQUEST_CODE:
+			for (Method method : mMethodList) {
+			    try {
+				method.setAccessible(true);
+				if (mMethodArgs.get(method.getName()) != null) {
+				    method.invoke(this, mMethodArgs.get(method.getName()));
+				}else {
+				    method.invoke(this);
+				}
+			    } catch (IllegalAccessException e) {
+				e.printStackTrace();
+			    } catch (InvocationTargetException e) {
+				e.printStackTrace();
+			    }
+			}
+			mMethodList.clear();
+			break;
+		}
+	    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        MPermissionUtils.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-}
+	    @Override
+	    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		MPermissionUtils.onRequestPermissionsResult(requestCode, permissions, grantResults);
+	    }
+	}
 
 
 | 注解名称         | 作用          | 备注          |
