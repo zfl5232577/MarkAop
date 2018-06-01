@@ -12,6 +12,12 @@ AOP切面框架：
       }
     }
     
+    allprojects {
+      repositories {
+          maven { url "https://raw.githubusercontent.com/zfl5232577/maven/master" }
+      }
+    }
+    
 Module的build.gradle文件
 
     apply plugin: 'markaop-plugin'
