@@ -1,1 +1,1 @@
-include ':app', ':aoplibrary'
+include ':app', ':aoplibrary', ':markaop-plugin'

@@ -16,5 +16,5 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.CLASS)
-public @interface SingleClick {
+public @interface Async {
 }

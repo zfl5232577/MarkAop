@@ -1,9 +1,10 @@
 package com.mark.markaop;
 
+import android.Manifest;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,12 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.mark.aoplibrary.annotation.Async;
 import com.mark.aoplibrary.annotation.CheckLogin;
 import com.mark.aoplibrary.annotation.CheckNet;
+import com.mark.aoplibrary.annotation.CheckPermission;
 import com.mark.aoplibrary.annotation.Logger;
 import com.mark.aoplibrary.annotation.SingleClick;
 import com.mark.aoplibrary.annotation.TimeLog;
@@ -22,7 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private final String TAG = MainActivity.class.getSimpleName();
 
@@ -64,19 +68,37 @@ public class MainActivity extends AppCompatActivity {
     private void loggerTest(){
 
     }
-    @CheckLogin(isLogin = true)
+    @CheckLogin()
     private void checkLoginTest(){
-        Log.e(TAG, "checkLoginTest: 用户已经登陆了，dothing" );
+        Log.e(TAG, "checkLoginTest: 用户已经登陆了，dothing======>");
     }
     @CheckNet
-    private void checkNetTest(){
+    private String checkNetTest(){
         Log.e(TAG, "checkNetTest: 网络已连接，dothing" );
+        return "09090";
     }
 
     @TimeLog
     private void timeLogTest(){
         SystemClock.sleep(300);
         Log.e(TAG, "timeLogTest: 执行完毕" );
+    }
+
+    @CheckPermission(Manifest.permission.CAMERA)
+    private boolean checkPermission(){
+        Log.e(TAG, "checkPermission: 已经有权限了，dothing" );
+        return true;
+    }
+
+    @Async
+    private void asyncTest(){
+        Log.e(TAG, "asyncTest: "+Thread.currentThread().getName() );
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Toast.makeText(this,"这是异步任务",Toast.LENGTH_SHORT).show();
     }
 
     private static final DemoInfo[] DEMOS = {
@@ -88,10 +110,10 @@ public class MainActivity extends AppCompatActivity {
                     "检查网络切面编程测试，如果没有网络就跳转网络设置页面", "checkNetTest"),
             new DemoInfo("@TimeLog的使用",
                     "时间差切面编程测试，函数调用后，打印函数所需要的时间", "timeLogTest"),
-            new DemoInfo("@Logger的使用",
-                    "日志切面编程测试，函数调用前后打印日志", ""),
-            new DemoInfo("@Logger的使用",
-                    "日志切面编程测试，函数调用前后打印日志", "")
+            new DemoInfo("@CheckPermission的使用",
+                    "权限检车切面编程测试，函数调用前判断是否有权限并申请权限", "checkPermission"),
+            new DemoInfo("@asyncTest的使用",
+                    "异步切面编程测试，函数调用在子线程中", "asyncTest")
     };
 
     private class DemoListAdapter extends BaseAdapter {

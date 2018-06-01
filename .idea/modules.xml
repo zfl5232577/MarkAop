@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/MarkAOP.iml" filepath="$PROJECT_DIR$/MarkAOP.iml" />
       <module fileurl="file://$PROJECT_DIR$/aoplibrary/aoplibrary.iml" filepath="$PROJECT_DIR$/aoplibrary/aoplibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/markaop-plugin/markaop-plugin.iml" filepath="$PROJECT_DIR$/markaop-plugin/markaop-plugin.iml" />
     </modules>
   </component>
 </project>

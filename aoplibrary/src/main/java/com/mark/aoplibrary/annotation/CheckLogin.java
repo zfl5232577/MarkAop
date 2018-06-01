@@ -14,8 +14,7 @@ import java.lang.annotation.Target;
  *     version: 1.0
  * </pre>
  */
-@Target({ElementType.CONSTRUCTOR,ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.CLASS)
 public @interface CheckLogin {
-   boolean isLogin() default false;
 }

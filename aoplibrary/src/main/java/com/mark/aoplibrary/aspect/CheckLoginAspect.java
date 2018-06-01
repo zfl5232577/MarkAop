@@ -1,10 +1,12 @@
 package com.mark.aoplibrary.aspect;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.mark.aoplibrary.MarkAOPHelper;
-import com.mark.aoplibrary.annotation.CheckLogin;
+import com.mark.aoplibrary.utils.ActivityManager;
+import com.mark.aoplibrary.utils.SPUtils;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -12,7 +14,12 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+
 
 /**
  * <pre>
@@ -26,30 +33,52 @@ import java.lang.reflect.Method;
 @Aspect
 public class CheckLoginAspect {
 
-    @Pointcut("@within(com.mark.aoplibrary.annotation.CheckLogin)||@annotation(com.mark.aoplibrary.annotation.CheckLogin)")
+    @Pointcut("execution(@com.mark.aoplibrary.annotation.CheckLogin * *(..))")
     public void methodAnnotated() {
     }
 
     @Around("methodAnnotated()")//在连接点进行方法替换
-    public void aroundJoinPoint(ProceedingJoinPoint joinPoint) throws Throwable {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Method method = signature.getMethod();
-        Log.e("AOP", "aroundJoinPoint: "+method.getName() );
-        CheckLogin checkLogin = method.getAnnotation(CheckLogin.class);
-        if (checkLogin!=null) {
-            Log.e("AOP", "aroundJoinPoint: "+checkLogin );
-            Log.e("AOP", "aroundJoinPoint: "+checkLogin.isLogin() );
-            if (checkLogin.isLogin()) {
-                joinPoint.proceed();
-            }else {
-                Intent intent = new Intent(MarkAOPHelper.getInstance().getApplication(),
-                        MarkAOPHelper.getInstance().getOptions().getLoginActivity());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                MarkAOPHelper.getInstance().getApplication().startActivity(intent);
-            }
+    public Object aroundJoinPoint(ProceedingJoinPoint joinPoint) throws Throwable {
+        Object result = null;
+        if (SPUtils.getInstance().getBoolean("isLogin", false)) {
+            result = joinPoint.proceed();
         } else {
-            // 不影响原来的流程
-            joinPoint.proceed();
+            if (MarkAOPHelper.getInstance().getOptions().getLoginActivity() != null) {
+                Class clazz = joinPoint.getTarget().getClass();
+                Field mMethodList = null;
+                Field mMethodArgs = null;
+                boolean over = false;
+                while (!over && clazz != null && !clazz.getName().equals("Object")) {
+                    Field[] fields = clazz.getDeclaredFields();
+                    for (Field field : fields) {
+                        if (field.getName().equals("mMethodArgs")) {
+                            mMethodArgs = field;
+                        }
+                        if (field.getName().equals("mMethodList")) {
+                            mMethodList = field;
+                        }
+                        if (mMethodList != null && mMethodArgs != null) {
+                            over = true;
+                            break;
+                        }
+                    }
+                    clazz = clazz.getSuperclass();
+                }
+                if (mMethodList != null && mMethodArgs != null) {
+                    MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+                    Method method = signature.getMethod();
+                    mMethodList.setAccessible(true);
+                    mMethodArgs.setAccessible(true);
+                    ((ArrayList) mMethodList.get(joinPoint.getTarget())).add(method);
+                    ((HashMap) mMethodArgs.get(joinPoint.getTarget())).put(method.getName(), joinPoint.getArgs());
+                }
+                Activity currentActivity = ActivityManager.getInstance().currentActivity();
+                Intent intent = new Intent(currentActivity, MarkAOPHelper.getInstance().getOptions().getLoginActivity());
+                currentActivity.startActivityForResult(intent, MarkAOPHelper.getInstance().getOptions().getREQUEST_CODE());
+            } else {
+                Toast.makeText(MarkAOPHelper.getInstance().getApplication(), "暂时未登陆，请登陆", Toast.LENGTH_SHORT).show();
+            }
         }
+        return result;
     }
 }

@@ -15,6 +15,7 @@ import java.lang.annotation.Target;
  * </pre>
  */
 @Target(ElementType.METHOD)
-@Retention(RetentionPolicy.CLASS)
-public @interface SingleClick {
+@Retention(RetentionPolicy.RUNTIME)
+public @interface CheckPermission {
+    String[] value();
 }

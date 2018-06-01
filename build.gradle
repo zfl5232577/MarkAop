@@ -1,16 +1,17 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+
     repositories {
         google()
         jcenter()
         mavenCentral()
+//        maven { url uri('../MarkAOP/maven-snapshots')}
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
         classpath 'org.aspectj:aspectjtools:1.8.13'
-
+//        classpath 'com.mark:markaop-plugin:1.0.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -22,6 +23,8 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
+        maven { url "https://raw.githubusercontent.com/aorise-org/maven-snapshots/master" }
+        maven { url "https://raw.githubusercontent.com/zfl5232577/maven/master" }
     }
 }
 

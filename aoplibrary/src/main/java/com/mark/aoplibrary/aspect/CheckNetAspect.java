@@ -1,10 +1,9 @@
 package com.mark.aoplibrary.aspect;
 
-import android.util.Log;
 import android.widget.Toast;
 
 import com.mark.aoplibrary.MarkAOPHelper;
-import com.mark.aoplibrary.Utils;
+import com.mark.aoplibrary.utils.Utils;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -28,11 +27,13 @@ public class CheckNetAspect {
     }
 
     @Around("methodAnnotated()")
-    public void aroundJoinPoint(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object aroundJoinPoint(ProceedingJoinPoint joinPoint) throws Throwable {
+        Object result = null;
         if (Utils.isConnected()) {
-            joinPoint.proceed();
+            result = joinPoint.proceed();
         }else {
             Toast.makeText(MarkAOPHelper.getInstance().getApplication(),"网络暂时不可用，请检查网络",Toast.LENGTH_SHORT).show();
         }
+        return result;
     }
 }

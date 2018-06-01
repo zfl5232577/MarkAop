@@ -13,6 +13,7 @@ import android.app.Activity;
  */
 public class AOPLibraryOptions {
     private boolean mDebug = true;
+    private int REQUEST_CODE;
     private Class<? extends Activity> mLoginActivity;
     private Class<? extends Activity> mNoNETActivity;
 
@@ -28,8 +29,13 @@ public class AOPLibraryOptions {
         return mLoginActivity;
     }
 
-    public void setLoginActivity(Class<? extends Activity> loginActivity) {
+    public void setLoginActivity(Class<? extends Activity> loginActivity,int requestCode) {
         mLoginActivity = loginActivity;
+        REQUEST_CODE = requestCode;
+    }
+
+    public int getREQUEST_CODE() {
+        return REQUEST_CODE;
     }
 
     public Class<? extends Activity> getNoNETActivity() {

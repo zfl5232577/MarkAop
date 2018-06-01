@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/aoplibrary" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/markaop-plugin" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
