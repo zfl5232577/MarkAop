@@ -28,9 +28,10 @@ Module的build.gradle文件
 ---
 ```Java在Appliction的onCreate
 
-	MarkAOPHelper.getInstance().init(context);
-  	MarkAOPHelper.getInstance().getOptions().setDebug(BuildConfig.DEBUG);
-  	MarkAOPHelper.getInstance().getOptions().setLoginActivity(LoginActivity.class,LoginActivity.REQUEST_CODE);
+	MarkAOPHelper.getInstance().init(context);//初始化
+  	MarkAOPHelper.getInstance().getOptions().setDebug(BuildConfig.DEBUG);//日志打印Logger和Timelog的开关
+  	MarkAOPHelper.getInstance().getOptions().setLoginActivity(LoginActivity.class
+		,LoginActivity.REQUEST_CODE);//设置登陆界面和跳转登陆界面的申请码
   
 ```
 
