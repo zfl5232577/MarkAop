@@ -37,7 +37,10 @@ Module的build.gradle文件
 登陆成功后一定记得调用：
 
     SPUtils.getInstance().put("isLogin",true);
-    
+
+检查登陆和检查权限配置需要麻烦点，因为登陆会完成你登陆前的操作，检查权限会自己去申请权限或者弹出提示框。
+
+配置如下：
 BaseActivity添加下面函数和变量：
 
 	
