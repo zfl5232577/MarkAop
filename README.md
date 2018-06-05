@@ -47,41 +47,42 @@ BaseActivity添加下面函数和变量：
 	
 	
 	public class BaseActivity extends AppCompatActivity {
-	    private List<Method> mMethodList = new ArrayList<>();
-	    private HashMap<String, Object[]> mMethodArgs = new HashMap<>();
 
 	    @Override
-	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode != RESULT_OK) {
-		    return;
-		}
-		switch (requestCode) {
-		    case LoginActivity.REQUEST_CODE:
-			for (Method method : mMethodList) {
-			    try {
-				method.setAccessible(true);
-				if (mMethodArgs.get(method.getName()) != null) {
-				    method.invoke(this, mMethodArgs.get(method.getName()));
-				}else {
-				    method.invoke(this);
-				}
-			    } catch (IllegalAccessException e) {
-				e.printStackTrace();
-			    } catch (InvocationTargetException e) {
-				e.printStackTrace();
-			    }
-			}
-			mMethodList.clear();
-			break;
-		}
-	    }
+           protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+               super.onActivityResult(requestCode, resultCode, data);
+               if (resultCode != RESULT_OK) {
+                   return;
+               }
+               switch (requestCode) {
+                   case LoginActivity.REQUEST_CODE:
+                       List<Method> mMethodList = MarkAOPHelper.getInstance().getMethodList();
+                       HashMap<String, Object[]> mMethodArgs = MarkAOPHelper.getInstance().getMethodArgs();
+                       for (Method method : mMethodList) {
+                           try {
+                               method.setAccessible(true);
+                               Object[] args = mMethodArgs.get(method.getName());
+                               if (args != null) {
+                                   method.invoke(this, args);
+                               }else {
+                                   method.invoke(this);
+                               }
+                           } catch (IllegalAccessException e) {
+                               e.printStackTrace();
+                           } catch (InvocationTargetException e) {
+                               e.printStackTrace();
+                           }
+                       }
+                       MarkAOPHelper.getInstance().clear();
+                       break;
+               }
+           }
 
-	    @Override
-	    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		MPermissionUtils.onRequestPermissionsResult(requestCode, permissions, grantResults);
-	    }
+           @Override
+           public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+               super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+               MPermissionUtils.onRequestPermissionsResult(requestCode, permissions, grantResults);
+           }
 	}
 
 
@@ -94,5 +95,6 @@ BaseActivity添加下面函数和变量：
 | @CheckPermission|适配6.0动态权限，没有权限并且申请权限|
 | @SingleClick    |防止按钮被连点，执行重复操作，点击间隔为600ms|支持追踪匿名内部类中的方法    |
 | @TimeLog        |用于追踪某个方法花费的时间,可以用于性能调优的评判|支持追踪匿名内部类中的方法       |
+| @NotOpen        |用于拦截某个方法，功能暂未完成，弹出Toast提示      |
   
   
