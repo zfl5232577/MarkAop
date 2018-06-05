@@ -20,10 +20,11 @@ repositories{
 uploadArchives{
     repositories{
         mavenDeployer{
-            repository(url:uri('../maven-snapshots'))
+            repository(url:uri('C:/Users/Mark/Desktop/maven-snapshots'))
             pom.groupId = 'com.mark' // 组名
             pom.artifactId = 'markaop-plugin' // 插件名
             pom.version = '1.0.0' // 版本号
         }
     }
 }
+

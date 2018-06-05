@@ -19,6 +19,7 @@ import com.mark.aoplibrary.annotation.CheckLogin;
 import com.mark.aoplibrary.annotation.CheckNet;
 import com.mark.aoplibrary.annotation.CheckPermission;
 import com.mark.aoplibrary.annotation.Logger;
+import com.mark.aoplibrary.annotation.NotOpen;
 import com.mark.aoplibrary.annotation.SingleClick;
 import com.mark.aoplibrary.annotation.TimeLog;
 
@@ -101,6 +102,11 @@ public class MainActivity extends BaseActivity {
         Toast.makeText(this,"这是异步任务",Toast.LENGTH_SHORT).show();
     }
 
+    @NotOpen
+    private void notOpen(){
+        Log.e(TAG, "checkPermission: 功能开放了，dothing" );
+    }
+
     private static final DemoInfo[] DEMOS = {
             new DemoInfo("@Logger的使用",
                     "日志切面编程测试，函数调用前后打印日志", "loggerTest"),
@@ -112,8 +118,10 @@ public class MainActivity extends BaseActivity {
                     "时间差切面编程测试，函数调用后，打印函数所需要的时间", "timeLogTest"),
             new DemoInfo("@CheckPermission的使用",
                     "权限检车切面编程测试，函数调用前判断是否有权限并申请权限", "checkPermission"),
-            new DemoInfo("@asyncTest的使用",
-                    "异步切面编程测试，函数调用在子线程中", "asyncTest")
+            new DemoInfo("@Async的使用",
+                    "异步切面编程测试，函数调用在子线程中", "asyncTest"),
+            new DemoInfo("@NotOpen的使用",
+                    "功能暂未开放切面编程测试，函数不能调用弹出Toast", "notOpen")
     };
 
     private class DemoListAdapter extends BaseAdapter {

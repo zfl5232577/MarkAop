@@ -6,6 +6,11 @@ import android.os.Bundle;
 
 import com.mark.aoplibrary.utils.ActivityManager;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * <pre>
  *     author : Mark
@@ -17,6 +22,8 @@ import com.mark.aoplibrary.utils.ActivityManager;
  */
 public class MarkAOPHelper {
     private static volatile MarkAOPHelper mInstance;
+    private List<Method> mMethodList = new ArrayList<>();
+    private HashMap<String, Object[]> mMethodArgs = new HashMap<>();
     private AOPLibraryOptions mOptions;
     private Application mApplication;
     private MarkAOPHelper() {
@@ -45,6 +52,19 @@ public class MarkAOPHelper {
 
     public AOPLibraryOptions getOptions() {
         return mOptions;
+    }
+
+    public List<Method> getMethodList() {
+        return mMethodList;
+    }
+
+    public HashMap<String, Object[]> getMethodArgs() {
+        return mMethodArgs;
+    }
+
+    public void clear(){
+        mMethodList.clear();
+        mMethodArgs.clear();
     }
 
     private static Application.ActivityLifecycleCallbacks sLifecycleCallbacks = new Application.ActivityLifecycleCallbacks() {

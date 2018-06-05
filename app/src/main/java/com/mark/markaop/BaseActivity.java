@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
+import com.mark.aoplibrary.MarkAOPHelper;
 import com.mark.aoplibrary.utils.MPermissionUtils;
 
 import java.lang.reflect.InvocationTargetException;
@@ -22,8 +23,6 @@ import java.util.List;
  * </pre>
  */
 public class BaseActivity extends AppCompatActivity {
-    private List<Method> mMethodList = new ArrayList<>();
-    private HashMap<String, Object[]> mMethodArgs = new HashMap<>();
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -33,11 +32,14 @@ public class BaseActivity extends AppCompatActivity {
         }
         switch (requestCode) {
             case LoginActivity.REQUEST_CODE:
+                List<Method> mMethodList = MarkAOPHelper.getInstance().getMethodList();
+                HashMap<String, Object[]> mMethodArgs = MarkAOPHelper.getInstance().getMethodArgs();
                 for (Method method : mMethodList) {
                     try {
                         method.setAccessible(true);
-                        if (mMethodArgs.get(method.getName()) != null) {
-                            method.invoke(this, mMethodArgs.get(method.getName()));
+                        Object[] args = mMethodArgs.get(method.getName());
+                        if (args != null) {
+                            method.invoke(this, args);
                         }else {
                             method.invoke(this);
                         }
@@ -47,7 +49,7 @@ public class BaseActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                mMethodList.clear();
+                MarkAOPHelper.getInstance().clear();
                 break;
         }
     }

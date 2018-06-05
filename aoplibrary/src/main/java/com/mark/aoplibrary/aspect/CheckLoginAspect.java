@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-
 /**
  * <pre>
  *     author : Mark
@@ -44,34 +43,11 @@ public class CheckLoginAspect {
             result = joinPoint.proceed();
         } else {
             if (MarkAOPHelper.getInstance().getOptions().getLoginActivity() != null) {
-                Class clazz = joinPoint.getTarget().getClass();
-                Field mMethodList = null;
-                Field mMethodArgs = null;
-                boolean over = false;
-                while (!over && clazz != null && !clazz.getName().equals("Object")) {
-                    Field[] fields = clazz.getDeclaredFields();
-                    for (Field field : fields) {
-                        if (field.getName().equals("mMethodArgs")) {
-                            mMethodArgs = field;
-                        }
-                        if (field.getName().equals("mMethodList")) {
-                            mMethodList = field;
-                        }
-                        if (mMethodList != null && mMethodArgs != null) {
-                            over = true;
-                            break;
-                        }
-                    }
-                    clazz = clazz.getSuperclass();
-                }
-                if (mMethodList != null && mMethodArgs != null) {
-                    MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-                    Method method = signature.getMethod();
-                    mMethodList.setAccessible(true);
-                    mMethodArgs.setAccessible(true);
-                    ((ArrayList) mMethodList.get(joinPoint.getTarget())).add(method);
-                    ((HashMap) mMethodArgs.get(joinPoint.getTarget())).put(method.getName(), joinPoint.getArgs());
-                }
+                MarkAOPHelper.getInstance().clear();
+                MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+                Method method = signature.getMethod();
+                MarkAOPHelper.getInstance().getMethodList().add(method);
+                MarkAOPHelper.getInstance().getMethodArgs().put(method.getName(), joinPoint.getArgs());
                 Activity currentActivity = ActivityManager.getInstance().currentActivity();
                 Intent intent = new Intent(currentActivity, MarkAOPHelper.getInstance().getOptions().getLoginActivity());
                 currentActivity.startActivityForResult(intent, MarkAOPHelper.getInstance().getOptions().getREQUEST_CODE());

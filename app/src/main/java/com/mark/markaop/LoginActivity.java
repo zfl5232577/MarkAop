@@ -1,12 +1,10 @@
 package com.mark.markaop;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import cn.aorise.common.core.util.SPUtils;
+import com.mark.aoplibrary.utils.SPUtils;
 
 
 public class LoginActivity extends BaseActivity {

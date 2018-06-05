@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.mark.aoplibrary.MarkAOPHelper;
 
-import cn.aorise.common.core.util.Utils;
 
 /**
  * <pre>
@@ -19,7 +18,6 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Utils.init(this);
         MarkAOPHelper.getInstance().init(this);
         MarkAOPHelper.getInstance().getOptions().setLoginActivity(LoginActivity.class,LoginActivity.REQUEST_CODE);
     }
