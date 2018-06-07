@@ -3,7 +3,7 @@
 
 基于aspectj的AOP，无需使用耗费性能的反射.不过,需要在build.gradle中配置一下aspectj
   
-##AOP切面框架：
+## AOP切面框架：
 
     buildscript {
        repositories {
@@ -24,8 +24,8 @@ Module的build.gradle文件
 
     apply plugin: 'markaop-plugin'
     
-##框架初始化:
----
+## 框架初始化:
+------
 ```Java在Appliction的onCreate
 
 	MarkAOPHelper.getInstance().init(context);//初始化
@@ -35,13 +35,13 @@ Module的build.gradle文件
   
 ```
 
-##登陆成功后一定记得调用：
+登陆成功后一定记得调用：
 
     SPUtils.getInstance().put("isLogin",true);
 
 检查登陆和检查权限配置需要麻烦点，因为登陆会完成你登陆前的操作，检查权限会自己去申请权限或者弹出提示框。
 
-##配置如下：
+## 配置如下：
 BaseActivity添加下面函数和变量：
 
 	

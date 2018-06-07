@@ -42,11 +42,17 @@ public class MarkAOPHelper {
     }
 
     public void init(Application application){
+        if (mApplication==null){
+            throw new NullPointerException("MaikAOP init() Application is null");
+        }
         mApplication = application;
         mApplication.registerActivityLifecycleCallbacks(sLifecycleCallbacks);
     }
 
     public Application getApplication() {
+        if (mApplication==null){
+            throw new NullPointerException("The MaikAOP is not initialized");
+        }
         return mApplication;
     }
 

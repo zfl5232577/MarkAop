@@ -15,7 +15,6 @@ import java.lang.annotation.Target;
  * </pre>
  */
 @Target({ElementType.CONSTRUCTOR,ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.CLASS)
 public @interface TimeLog {
-   boolean isLogin() default false;
 }
