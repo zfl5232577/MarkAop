@@ -10,7 +10,7 @@
           maven { url "https://raw.githubusercontent.com/zfl5232577/maven/master" }
       }
       dependencies {
-          classpath 'com.mark:markaop-plugin:1.1.0'
+          classpath 'com.mark:markaop-plugin:1.2.0'
       }
     }
     
