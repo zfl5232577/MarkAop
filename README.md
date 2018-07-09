@@ -56,24 +56,28 @@ BaseActivity添加下面函数和变量：
                }
                switch (requestCode) {
                    case LoginActivity.REQUEST_CODE:
-                       List<Method> mMethodList = MarkAOPHelper.getInstance().getMethodList();
-                       HashMap<String, Object[]> mMethodArgs = MarkAOPHelper.getInstance().getMethodArgs();
-                       for (Method method : mMethodList) {
-                           try {
-                               method.setAccessible(true);
-                               Object[] args = mMethodArgs.get(method.getName());
-                               if (args != null) {
-                                   method.invoke(this, args);
-                               }else {
-                                   method.invoke(this);
-                               }
-                           } catch (IllegalAccessException e) {
-                               e.printStackTrace();
-                           } catch (InvocationTargetException e) {
-                               e.printStackTrace();
-                           }
-                       }
-                       MarkAOPHelper.getInstance().clear();
+                      List<Method> mMethodList = MarkAOPHelper.getInstance().getMethodList();
+                      HashMap<String, Object[]> mMethodArgs = MarkAOPHelper.getInstance().getMethodArgs();
+                      HashMap<String, Object> mTargets = MarkAOPHelper.getInstance().getTargets();
+                      for (Method method : mMethodList) {
+                          try {
+                              method.setAccessible(true);
+                              Object[] args = mMethodArgs.get(method.getName());
+                              Object target = mTargets.get(method.getName());
+                              if (target != null) {
+                                  if (args != null) {
+                                      method.invoke(target, args);
+                                  } else {
+                                      method.invoke(target);
+                                  }
+                              }
+                          } catch (IllegalAccessException e) {
+                              e.printStackTrace();
+                          } catch (InvocationTargetException e) {
+                              e.printStackTrace();
+                          }
+                      }
+                      MarkAOPHelper.getInstance().clear();
                        break;
                }
            }

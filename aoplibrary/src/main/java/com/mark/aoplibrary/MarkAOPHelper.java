@@ -24,6 +24,7 @@ public class MarkAOPHelper {
     private static volatile MarkAOPHelper mInstance;
     private List<Method> mMethodList = new ArrayList<>();
     private HashMap<String, Object[]> mMethodArgs = new HashMap<>();
+    private HashMap<String, Object> mTargets = new HashMap<>();
     private AOPLibraryOptions mOptions;
     private Application mApplication;
     private MarkAOPHelper() {
@@ -42,7 +43,7 @@ public class MarkAOPHelper {
     }
 
     public void init(Application application){
-        if (mApplication==null){
+        if (application==null){
             throw new NullPointerException("MaikAOP init() Application is null");
         }
         mApplication = application;
@@ -68,9 +69,14 @@ public class MarkAOPHelper {
         return mMethodArgs;
     }
 
+    public HashMap<String, Object> getTargets() {
+        return mTargets;
+    }
+
     public void clear(){
         mMethodList.clear();
         mMethodArgs.clear();
+        mTargets.clear();
     }
 
     private static Application.ActivityLifecycleCallbacks sLifecycleCallbacks = new Application.ActivityLifecycleCallbacks() {

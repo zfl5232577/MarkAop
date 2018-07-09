@@ -34,14 +34,18 @@ public class BaseActivity extends AppCompatActivity {
             case LoginActivity.REQUEST_CODE:
                 List<Method> mMethodList = MarkAOPHelper.getInstance().getMethodList();
                 HashMap<String, Object[]> mMethodArgs = MarkAOPHelper.getInstance().getMethodArgs();
+                HashMap<String, Object> mTargets = MarkAOPHelper.getInstance().getTargets();
                 for (Method method : mMethodList) {
                     try {
                         method.setAccessible(true);
                         Object[] args = mMethodArgs.get(method.getName());
-                        if (args != null) {
-                            method.invoke(this, args);
-                        }else {
-                            method.invoke(this);
+                        Object target = mTargets.get(method.getName());
+                        if (target != null) {
+                            if (args != null) {
+                                method.invoke(target, args);
+                            } else {
+                                method.invoke(target);
+                            }
                         }
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();

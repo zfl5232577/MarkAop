@@ -48,6 +48,7 @@ public class CheckLoginAspect {
                 Method method = signature.getMethod();
                 MarkAOPHelper.getInstance().getMethodList().add(method);
                 MarkAOPHelper.getInstance().getMethodArgs().put(method.getName(), joinPoint.getArgs());
+                MarkAOPHelper.getInstance().getTargets().put(method.getName(), joinPoint.getTarget());
                 Activity currentActivity = ActivityManager.getInstance().currentActivity();
                 Intent intent = new Intent(currentActivity, MarkAOPHelper.getInstance().getOptions().getLoginActivity());
                 currentActivity.startActivityForResult(intent, MarkAOPHelper.getInstance().getOptions().getREQUEST_CODE());
