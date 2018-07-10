@@ -34,7 +34,7 @@ class MarkAOPPlugin implements Plugin<Project> {
             variants = project.android.libraryVariants
         }
         project.dependencies {
-            implementation 'com.mark:markaop-lib:1.2.0'
+            implementation 'com.mark:markaop-lib:1.3.0'
         }
         variants.all { variant ->
             if (!variant.buildType.isDebuggable()) {

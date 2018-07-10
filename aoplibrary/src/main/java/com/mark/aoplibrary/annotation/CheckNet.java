@@ -15,6 +15,7 @@ import java.lang.annotation.Target;
  * </pre>
  */
 @Target(ElementType.METHOD)
-@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface CheckNet {
+    String notNetMethod() default "";
 }

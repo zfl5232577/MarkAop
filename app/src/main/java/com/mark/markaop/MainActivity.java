@@ -79,6 +79,16 @@ public class MainActivity extends BaseActivity {
         return "09090";
     }
 
+    @CheckNet(notNetMethod = "notNet")
+    private String checkNetTestHasParam(){
+        Log.e(TAG, "checkNetTestHasParam: 网络已连接，dothing" );
+        return "09090";
+    }
+
+    private void notNet(){
+        Log.e(TAG, "notNet: ===========================" );
+    }
+
     @TimeLog
     private void timeLogTest(){
         SystemClock.sleep(300);
@@ -113,7 +123,9 @@ public class MainActivity extends BaseActivity {
             new DemoInfo("@CheckLogin的使用",
                     "检查登陆切面编程测试，如果没有登陆会跳转登陆界面", "checkLoginTest"),
             new DemoInfo("@CheckNet的使用",
-                    "检查网络切面编程测试，如果没有网络就跳转网络设置页面", "checkNetTest"),
+                    "检查网络切面编程测试，如果没有网络没有方法参数就弹Toast", "checkNetTest"),
+            new DemoInfo("@@CheckNet(notNetMethod = \"notNet\")的使用",
+                    "检查网络切面编程测试，如果没有网络有方法参数就执行该方法", "checkNetTestHasParam"),
             new DemoInfo("@TimeLog的使用",
                     "时间差切面编程测试，函数调用后，打印函数所需要的时间", "timeLogTest"),
             new DemoInfo("@CheckPermission的使用",
