@@ -15,6 +15,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 
 
@@ -41,8 +42,8 @@ public class CheckPermissionAspect {
         Method method = signature.getMethod();
         CheckPermission permission = method.getAnnotation(CheckPermission.class);
         if (permission != null) {
-            AppCompatActivity currentActivity = (AppCompatActivity) ActivityManager.getInstance().currentActivity();
-            MPermissionUtils.requestPermissionsResult(currentActivity, 0x999, permission.value()
+            WeakReference<AppCompatActivity> currentActivity = new WeakReference<AppCompatActivity>((AppCompatActivity) ActivityManager.getInstance().currentActivity());
+            MPermissionUtils.requestPermissionsResult(currentActivity.get(), 0x999, permission.value()
                     , new MPermissionUtils.OnPermissionListener() {
                         @Override
                         public void onPermissionGranted() {
@@ -55,7 +56,7 @@ public class CheckPermissionAspect {
 
                         @Override
                         public void onPermissionDenied() {
-                            MPermissionUtils.showTipsDialog(currentActivity);
+                            MPermissionUtils.showTipsDialog(currentActivity.get());
                         }
                     });
         } else {

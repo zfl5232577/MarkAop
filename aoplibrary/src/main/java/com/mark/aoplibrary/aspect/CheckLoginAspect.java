@@ -2,6 +2,7 @@ package com.mark.aoplibrary.aspect;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.mark.aoplibrary.MarkAOPHelper;
@@ -14,6 +15,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -49,9 +51,9 @@ public class CheckLoginAspect {
                 MarkAOPHelper.getInstance().getMethodList().add(method);
                 MarkAOPHelper.getInstance().getMethodArgs().put(method.getName(), joinPoint.getArgs());
                 MarkAOPHelper.getInstance().getTargets().put(method.getName(), joinPoint.getTarget());
-                Activity currentActivity = ActivityManager.getInstance().currentActivity();
-                Intent intent = new Intent(currentActivity, MarkAOPHelper.getInstance().getOptions().getLoginActivity());
-                currentActivity.startActivityForResult(intent, MarkAOPHelper.getInstance().getOptions().getREQUEST_CODE());
+                WeakReference<AppCompatActivity> currentActivity = new WeakReference<AppCompatActivity>((AppCompatActivity) ActivityManager.getInstance().currentActivity());
+                Intent intent = new Intent(currentActivity.get(), MarkAOPHelper.getInstance().getOptions().getLoginActivity());
+                currentActivity.get().startActivityForResult(intent, MarkAOPHelper.getInstance().getOptions().getREQUEST_CODE());
             } else {
                 Toast.makeText(MarkAOPHelper.getInstance().getApplication(), "暂时未登陆，请登陆", Toast.LENGTH_SHORT).show();
             }

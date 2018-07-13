@@ -11,6 +11,7 @@ import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,12 +53,11 @@ public class MPermissionUtils {
             , String[] permissions, OnPermissionListener callback) {
 
         checkCallingObjectSuitability(object);
-        mOnPermissionListener = callback;
-
         if (checkPermissions(getContext(object), permissions)) {
-            if (mOnPermissionListener != null)
-                mOnPermissionListener.onPermissionGranted();
+            if (callback != null)
+                callback.onPermissionGranted();
         } else {
+            mOnPermissionListener = new WeakReference<OnPermissionListener>(callback);
             List<String> deniedPermissions = getDeniedPermissions(getContext(object), permissions);
             if (deniedPermissions.size() > 0) {
                 mRequestCode = requestCode;
@@ -98,11 +98,11 @@ public class MPermissionUtils {
     public static void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (mRequestCode != -1 && requestCode == mRequestCode) {
             if (verifyPermissions(grantResults)) {
-                if (mOnPermissionListener != null)
-                    mOnPermissionListener.onPermissionGranted();
+                if (mOnPermissionListener.get() != null)
+                    mOnPermissionListener.get().onPermissionGranted();
             } else {
-                if (mOnPermissionListener != null)
-                    mOnPermissionListener.onPermissionDenied();
+                if (mOnPermissionListener.get() != null)
+                    mOnPermissionListener.get().onPermissionDenied();
             }
         }
     }
@@ -111,6 +111,9 @@ public class MPermissionUtils {
      * 显示提示对话框
      */
     public static void showTipsDialog(final Context context) {
+        if (context==null){
+            return;
+        }
         new AlertDialog.Builder(context)
                 .setTitle("提示信息")
                 .setMessage("当前应用缺少必要权限，该功能暂时无法使用。如若需要，请单击【确定】按钮前往设置中心进行权限授权。")
@@ -211,6 +214,6 @@ public class MPermissionUtils {
         void onPermissionDenied();
     }
 
-    private static OnPermissionListener mOnPermissionListener;
+    private static WeakReference<OnPermissionListener> mOnPermissionListener;
 
 }
