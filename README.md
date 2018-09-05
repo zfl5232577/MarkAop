@@ -10,7 +10,7 @@
           maven { url "https://raw.githubusercontent.com/zfl5232577/maven/master" }
       }
       dependencies {
-          classpath 'com.mark:markaop-plugin:1.2.0'
+          classpath 'com.mark:markaop-plugin:1.3.3'
       }
     }
     
@@ -92,7 +92,7 @@ BaseActivity添加下面函数和变量：
 
 | 注解名称         | 作用          | 备注          |
 | -------------   |:-------------:| :-------------:|
-| @Async          |借助rxjava,异步执行app中的方法|       |
+| @Async          |借助rxjava,异步执行app中的方法| 尽量使用在静态方法上，否则很容易内存泄漏，线程会持有Activity的引用|
 | @CheckLogin     |检查是否登陆，设置了登陆界面直接登陆界面，登陆完成后自己执行上此操作|
 | @Logger         |将方法的入参和出参都打印出来,可以用于调试|       |
 | @CheckNet       |可以在调用某个方法之前，检查网络连接状况，没有连接，注解不带方法名参数则不操作并弹出Toast，假如有方法名参数则执行该方法|

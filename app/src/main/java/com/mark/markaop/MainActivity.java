@@ -95,7 +95,7 @@ public class MainActivity extends BaseActivity {
         Log.e(TAG, "timeLogTest: 执行完毕" );
     }
 
-    @CheckPermission(Manifest.permission.CAMERA)
+    @CheckPermission({Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION})
     private boolean checkPermission(){
         Log.e(TAG, "checkPermission: 已经有权限了，dothing" );
         return true;

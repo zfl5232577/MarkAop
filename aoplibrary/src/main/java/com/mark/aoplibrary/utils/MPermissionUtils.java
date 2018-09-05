@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 
@@ -61,14 +62,26 @@ public class MPermissionUtils {
             List<String> deniedPermissions = getDeniedPermissions(getContext(object), permissions);
             if (deniedPermissions.size() > 0) {
                 mRequestCode = requestCode;
+//                if (object instanceof Activity) {
+//                    ((Activity) object).requestPermissions(deniedPermissions
+//                            .toArray(new String[deniedPermissions.size()]), requestCode);
+//                } else if (object instanceof android.app.Fragment) {
+//                    ((android.app.Fragment) object).requestPermissions(deniedPermissions
+//                            .toArray(new String[deniedPermissions.size()]), requestCode);
+//                } else if (object instanceof android.support.v4.app.Fragment) {
+//                    ((android.support.v4.app.Fragment) object).requestPermissions(deniedPermissions
+//                            .toArray(new String[deniedPermissions.size()]), requestCode);
+//                } else {
+//                    mRequestCode = -1;
+//                }
                 if (object instanceof Activity) {
-                    ((Activity) object).requestPermissions(deniedPermissions
+                    ActivityCompat.requestPermissions((Activity) object,deniedPermissions
                             .toArray(new String[deniedPermissions.size()]), requestCode);
                 } else if (object instanceof android.app.Fragment) {
-                    ((android.app.Fragment) object).requestPermissions(deniedPermissions
+                    ActivityCompat.requestPermissions(((android.app.Fragment) object).getActivity(),deniedPermissions
                             .toArray(new String[deniedPermissions.size()]), requestCode);
                 } else if (object instanceof android.support.v4.app.Fragment) {
-                    ((android.support.v4.app.Fragment) object).requestPermissions(deniedPermissions
+                    ActivityCompat.requestPermissions(((android.support.v4.app.Fragment) object).getActivity(),deniedPermissions
                             .toArray(new String[deniedPermissions.size()]), requestCode);
                 } else {
                     mRequestCode = -1;

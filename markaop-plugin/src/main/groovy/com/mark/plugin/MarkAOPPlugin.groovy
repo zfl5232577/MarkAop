@@ -34,14 +34,9 @@ class MarkAOPPlugin implements Plugin<Project> {
             variants = project.android.libraryVariants
         }
         project.dependencies {
-            implementation 'com.mark:markaop-lib:1.3.1'
+            implementation 'com.mark:markaop-lib:1.3.3'
         }
         variants.all { variant ->
-            if (!variant.buildType.isDebuggable()) {
-                log.debug("Skipping non-debuggable build type '${variant.buildType.name}'.")
-                return;
-            }
-
             JavaCompile javaCompile = variant.javaCompile
             javaCompile.doLast {
                 String[] args = [

@@ -112,7 +112,7 @@ public class MarkAOPHelper {
 
         @Override
         public void onActivityDestroyed(Activity activity) {
-            ActivityManager.getInstance().finishActivity(activity);
+            ActivityManager.getInstance().removeActivity(activity);
         }
     };
 }

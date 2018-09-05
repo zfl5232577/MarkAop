@@ -46,6 +46,13 @@ public class ActivityManager {
         sActivityStack.add(activity);
     }
 
+    public void removeActivity(Activity activity) {
+        if (sActivityStack == null) {
+            sActivityStack = new Stack<Activity>();
+        }
+        sActivityStack.remove(activity);
+    }
+
     /**
      * 获取当前Activity（栈顶Activity）
      *
@@ -104,7 +111,7 @@ public class ActivityManager {
     public void finishActivity(Class<?> cls) {
         for (Activity activity : sActivityStack) {
             if (activity.getClass().equals(cls)) {
-                finishActivity(activity);
+                activity.finish();
             }
         }
     }
@@ -130,7 +137,7 @@ public class ActivityManager {
     public void finishOthersActivity(Class<?> cls) {
         for (Activity activity : sActivityStack) {
             if (!(activity.getClass().equals(cls))) {
-                finishActivity(activity);
+                activity.finish();
             }
         }
     }
