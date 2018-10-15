@@ -23,6 +23,13 @@
 Module的build.gradle文件
 
     apply plugin: 'markaop-plugin'
+
+## 混淆规则:
+    -keep class com.mark.** { *; }
+    -dontwarn com.mark.**
+    -keepclassmembers class ** {
+        @com.mark.aoplibrary.annotation.* <methods>;
+    }
     
 ## 框架初始化:
 ------
