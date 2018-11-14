@@ -54,7 +54,7 @@ BaseActivity添加下面函数和变量：
 	
 	
 	public class BaseActivity extends AppCompatActivity {
-
+	    //配置检查登陆，登陆成功返回后自动执行原始函数，
 	    @Override
            protected void onActivityResult(int requestCode, int resultCode, Intent data) {
                super.onActivityResult(requestCode, resultCode, data);
@@ -88,7 +88,8 @@ BaseActivity添加下面函数和变量：
                        break;
                }
            }
-
+	
+	   //配置权限检查需要添加的方法
            @Override
            public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
