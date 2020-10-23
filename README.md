@@ -2,6 +2,7 @@
 面向切面编程-使代码更加清晰————工具使用aspectj
 
 基于aspectj的AOP，无需使用耗费性能的反射.不过,需要在build.gradle中配置一下aspectj
+已经是适配完成AndroidX，使用2.0.0+版本是适配AndroidX，1.0.0+为普通版本。
   
 ## AOP切面框架：
 

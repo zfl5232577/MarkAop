@@ -1,9 +1,6 @@
 package com.mark.aoplibrary.aspect;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.mark.aoplibrary.annotation.CheckPermission;
 import com.mark.aoplibrary.utils.ActivityManager;

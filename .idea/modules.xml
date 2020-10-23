@@ -3,6 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MarkAOP.iml" filepath="$PROJECT_DIR$/MarkAOP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MarkAop.iml" filepath="$PROJECT_DIR$/.idea/modules/MarkAop.iml" group="MarkAop" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/aoplibrary/MarkAop-aoplibrary.iml" filepath="$PROJECT_DIR$/.idea/modules/aoplibrary/MarkAop-aoplibrary.iml" group="MarkAop/aoplibrary" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MarkAop-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MarkAop-app.iml" group="MarkAop/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/markaop-plugin/MarkAop-markaop-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/markaop-plugin/MarkAop-markaop-plugin.iml" group="MarkAop/markaop-plugin" />
       <module fileurl="file://$PROJECT_DIR$/aoplibrary/aoplibrary.iml" filepath="$PROJECT_DIR$/aoplibrary/aoplibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/markaop-plugin/markaop-plugin.iml" filepath="$PROJECT_DIR$/markaop-plugin/markaop-plugin.iml" />
